@@ -33,6 +33,40 @@ export default function() {
                     }
                 }
             }
+
+            wpgraphql {
+              posts (where: {categoryName: "Portfolio"}){
+                edges{
+                  node{
+                    id
+                    excerpt
+                    slug
+                    date
+                    title
+                    content
+                    elementorData
+                  }
+                }
+              }
+            }
+
+              allFile {
+                edges {
+                  node {
+                    name
+                    parent{
+                      id
+                    }
+                    childImageSharp {
+                      fluid (maxWidth: 500){
+                        srcSet
+                        ...GatsbyImageSharpFluid
+
+                      }
+                    }
+                  }
+                }
+              }
         }
     `);
 

@@ -10,22 +10,21 @@ export default function({ data }) {
         <Layout>
             <SEO
                 lang="en"
-                title={data.markdownRemark.frontmatter.title}
-                description={data.markdownRemark.frontmatter.description}
+                title={data.wpgraphql.page.title}
+                description={data.wpgraphql.page.excerpt}
             />
             <div className="container">
                 <article className="post">
                     <div className="head text-primary">
-                        <h1>{data.markdownRemark.frontmatter.title}</h1>
+                        <h1>{data.wpgraphql.page.title}</h1>
                     </div>
                     <div className="content row flex">
-                        {data.markdownRemark.frontmatter.image && (
+                        {data.wpgraphql.page.featuredImage != null && (
                             <div className="center">
                                 <div className="img">
-                                    <Img
-                                        fluid={
-                                            data.markdownRemark.frontmatter
-                                                .image.childImageSharp.fluid
+                                    <img
+                                        src={
+                                            data.wpgraphql.page.featuredImage.sourceUrl
                                         }
                                     />
                                 </div>
@@ -34,7 +33,7 @@ export default function({ data }) {
                         <div
                             className="col s12 m11 l10"
                             dangerouslySetInnerHTML={{
-                                __html: data.markdownRemark.html
+                                __html: data.wpgraphql.page.content
                             }}
                         ></div>
                     </div>
@@ -45,23 +44,21 @@ export default function({ data }) {
 }
 
 export const query = graphql`
-    query($slug: String!) {
-        markdownRemark(fields: { slug: { eq: $slug } }) {
-            html
-            frontmatter {
-                title
-                description
-                image {
-                    publicURL
-                    childImageSharp {
-                        fluid(maxWidth: 1920) {
-                            srcSet
-                            ...GatsbyImageSharpFluid
-                        }
-                        id
-                    }
-                }
-            }
-        }
-    }
+query GET_PAGES($id: ID!) {
+wpgraphql {
+page(id: $id) {
+  id
+  title
+  date
+  uri
+  excerpt
+  content
+  featuredImage {
+    sourceUrl
+    title
+  }
+}
+
+}
+}
 `;

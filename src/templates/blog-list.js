@@ -9,13 +9,14 @@ import SEO from "../components/seo";
 class BlogList extends React.Component {
     render() {
         const query = this.props.datas;
-        if (query.allMarkdownRemark.edges.length > 0) {
+        console.log("QUERY2", query)
+        if (query.wpgraphql.posts.edges.length > 0) {
             return (
                 <section id="blog" className="container">
                     <div className="section-title">
                         <SectionTitle title="BLOG" />
                     </div>
-                    <BlogItems data={query} />
+                    <BlogItems data={query}/>
                     <Pagination
                         pathContext={this.props.pathContext}
                         type="blog"
@@ -38,36 +39,40 @@ export default function({ data, pathContext }) {
 }
 
 export const query = graphql`
-    query blogListPage($skip: Int!, $limit: Int!) {
-        allMarkdownRemark(
-            filter: { fileAbsolutePath: { regex: "/blog/" } }
-            sort: { fields: [frontmatter___date], order: DESC }
-            limit: $limit
-            skip: $skip
-        ) {
+    query blogListPage($limit: Int!) {
+        wpgraphql {
+          posts(where: {categoryName: "Blog", orderby: {field: DATE, order: DESC}}, first: $limit) {
             edges {
-                node {
-                    id
-                    frontmatter {
-                        title
-                        description
-                        date
-                        image {
-                            publicURL
-                            childImageSharp {
-                                fluid(maxWidth: 1920) {
-                                    srcSet
-                                    ...GatsbyImageSharpFluid
-                                }
-                                id
-                            }
-                        }
-                    }
-                    fields {
-                        slug
-                    }
+              node {
+                excerpt
+                slug
+                date
+                title
+                featuredImage {
+                  sourceUrl
                 }
+                elementorData
+              }
             }
+          }
+        }
+
+        allFile {
+          edges {
+            node {
+              name
+              parent{
+                id
+              }
+              childImageSharp {
+                fluid (maxWidth: 500){
+                  srcSet
+                  ...GatsbyImageSharpFluid
+
+                }
+              }
+            }
+          }
         }
     }
 `;

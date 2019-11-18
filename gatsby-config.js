@@ -1,15 +1,15 @@
 let siteMetadata = {
-    title: `Elemental`,
+    title: `Alchemy of Remembrance`,
     capitalizeTitleOnHome: true,
-    logo: `/images/logo.png`,
+    logo: `/images/Alchemy of Remembrance Logo.png`,
     icon: `/images/icon.png`,
     titleImage: `/images/wall.jpg`,
-    introTag: `PHOTOGRAPHER | VIDEOGRAPHER`,
-    description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sit amet accumsan arcu. Proin ac consequat arcu.`,
-    author: `@_akzhy`,
+    introTag: `Podcaster || Sangoma || Cacao Kuchina || Health & Longevity`,
+    description: `Living to create, learn, and explore the truth.`,
+    author: `Gabriel`,
     blogItemsPerPage: 10,
     portfolioItemsPerPage: 10,
-    darkmode: true,
+    darkmode: false,
     switchTheme: true,
     navLinks: [
         {
@@ -38,41 +38,40 @@ let siteMetadata = {
             name: "PRIVACY POLICY",
             url: "/privacy-policy"
         },
-        {
-            name: "GitHub",
-            url: "https://github.com/akzhy/gatsby-starter-elemental"
-        }
+        // {
+        //     name: "GitHub",
+        //     url: "https://github.com/akzhy/gatsby-starter-elemental"
+        // }
     ],
     social: [
         {
             name: "Facebook",
             icon: "/images/Facebook.svg",
-            url: "#"
+            url: "https://www.facebook.com/alchemyremembrance/"
         },
-        {
-            name: "Twitter",
-            icon: "/images/Twitter.svg",
-            url: "#"
-        },
+        // {
+        //     name: "Twitter",
+        //     icon: "/images/Twitter.svg",
+        //     url: "#"
+        // },
         {
             name: "Instagram",
             icon: "/images/Instagram.svg",
-            url: "#"
+            url: "https://www.instagram.com/alchemyofremembrance/"
         },
         {
             name: "Youtube",
             icon: "/images/Youtube.svg",
-            url: "#"
+            url: "https://www.youtube.com/channel/UCMuZwqrNoHY6-wRrDVfCKLg/"
         }
     ],
     contact: {
         /* Leave the below value completely empty (no space either) if you don't want a contact form. */
         api_url: "./test.json",
-        description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sit amet accumsan arcu. Proin ac consequat arcu.`,
-        mail: "hi@akzhy.com",
-        phone: "000-000-0000",
-        address: "1234 \nLocation \nLocation"
-    }
+        description: `Contact Matthew here. Ask your questions for the podcast, send an amazing experience to share, or just get in touch.`,
+        mail: "mattb007@gmail.com",
+        phone: "083-293-5904"
+      }
 };
 
 module.exports = {
@@ -107,6 +106,18 @@ module.exports = {
             options: {
                 strictMath: true
             }
-        }
+        },
+        {
+           resolve: `gatsby-source-graphql`,
+
+           options: {
+             // This type will contain remote schema Query type
+             typeName: `WPGraphQL`,
+             // This is field under which it's accessible
+             fieldName: `wpgraphql`,
+             // Url to query from
+             url: `http://41.185.8.137/~xic02/alchemyofremembrance/graphql`,
+           },
+         }
     ]
 };

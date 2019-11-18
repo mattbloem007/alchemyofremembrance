@@ -9,7 +9,7 @@ import SEO from "../components/seo";
 class PortfolioList extends React.Component {
     render() {
         const query = this.props.datas;
-        if (query.allMarkdownRemark.edges.length > 0) {
+        if (query.wpgraphql.posts.edges.length > 0) {
             return (
                 <section id="portfolio" className="container">
                     <div className="section-title">
@@ -38,36 +38,40 @@ export default function({ data, pathContext }) {
 }
 
 export const query = graphql`
-    query portfolioListPage($skip: Int!, $limit: Int!) {
-        allMarkdownRemark(
-            filter: { fileAbsolutePath: { regex: "/portfolio/" } }
-            sort: { fields: [frontmatter___date], order: DESC }
-            limit: $limit
-            skip: $skip
-        ) {
-            edges {
-                node {
-                    id
-                    frontmatter {
-                        title
-                        description
-                        date
-                        image {
-                            publicURL
-                            childImageSharp {
-                                fluid(maxWidth: 1920) {
-                                    srcSet
-                                    ...GatsbyImageSharpFluid
-                                }
-                                id
-                            }
-                        }
-                    }
-                    fields {
-                        slug
-                    }
-                }
+query portfolioListPage($limit: Int!) {
+    wpgraphql {
+      posts(where: {categoryName: "Portfolio", orderby: {field: DATE, order: DESC}}, first: $limit) {
+        edges {
+          node {
+            excerpt
+            slug
+            date
+            title
+            featuredImage {
+              sourceUrl
             }
+            elementorData
+          }
         }
+      }
     }
+
+    allFile {
+      edges {
+        node {
+          name
+          parent{
+            id
+          }
+          childImageSharp {
+            fluid (maxWidth: 500){
+              srcSet
+              ...GatsbyImageSharpFluid
+
+            }
+          }
+        }
+      }
+    }
+}
 `;

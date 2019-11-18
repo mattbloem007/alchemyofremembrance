@@ -4,39 +4,44 @@ import BlogItems from "./items-blog";
 
 export default function(props) {
     const query = useStaticQuery(graphql`
-        query latestBlogList {
-            allMarkdownRemark(
-                filter: { fileAbsolutePath: { regex: "/blog/" } }
-                limit: 6
-                sort: { fields: [frontmatter___date], order: DESC }
-            ) {
-                edges {
-                    node {
-                        id
-                        frontmatter {
-                            title
-                            description
-                            date
-                            image {
-                                publicURL
-                                childImageSharp {
-                                    fluid(maxWidth: 1920) {
-                                        srcSet
-                                        ...GatsbyImageSharpFluid
-                                    }
-                                    id
-                                }
-                            }
-                        }
-                        fields {
-                            slug
-                        }
-                    }
+      query latestBlogList {
+          wpgraphql {
+            posts(where: {categoryName: "Blog", orderby: {field: DATE, order: DESC}}, first: 6) {
+              edges {
+                node {
+                  excerpt
+                  slug
+                  date
+                  title
+                  featuredImage {
+                    sourceUrl
+                  }
+                  elementorData
                 }
+              }
             }
-        }
+          }
+
+          allFile {
+            edges {
+              node {
+                name
+                parent{
+                  id
+                }
+                childImageSharp {
+                  fluid (maxWidth: 500){
+                    srcSet
+                    ...GatsbyImageSharpFluid
+
+                  }
+                }
+              }
+            }
+          }
+      }
     `);
-    if (query.allMarkdownRemark.edges.length > 0) {
+    if (query.wpgraphql.posts.edges.length > 0) {
         return (
             <section id="latest-blogposts" className="container">
                 <div className="section-title">

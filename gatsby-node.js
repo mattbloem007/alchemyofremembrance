@@ -1,17 +1,5 @@
-const { createFilePath } = require(`gatsby-source-filesystem`);
+const { createFilePath, createRemoteFileNode } = require(`gatsby-source-filesystem`);
 const path = require(`path`);
-
-exports.onCreateNode = ({ node, getNode, actions }) => {
-    const { createNodeField } = actions;
-    if (node.internal.type === `MarkdownRemark`) {
-        const slug = createFilePath({ node, getNode, basePath: `basepages` });
-        createNodeField({
-            node,
-            name: `slug`,
-            value: slug
-        });
-    }
-};
 
 exports.createPages = ({ graphql, actions }) => {
     const { createPage } = actions;
@@ -66,9 +54,56 @@ exports.createPages = ({ graphql, actions }) => {
                     portfolioItemsPerPage
                 }
             }
+
+            wpgraphql {
+            posts {
+              edges {
+                node {
+                  id
+                  slug
+                  featuredImage{
+                    sourceUrl
+                  }
+                  categories {
+                    edges {
+                      node {
+                        name
+                      }
+                    }
+                  }
+                  elementorData
+                }
+              }
+            }
+
+            pages {
+              edges {
+                node {
+                  id
+                  slug
+                }
+              }
+            }
+
+            products {
+              edges {
+                node {
+                  id
+                  slug
+                }
+              }
+            }
+
+            }
         }
+
+
+
+
     `).then(result => {
-        const blogPosts = result.data.blog.edges;
+        const blogPosts = result.data.wpgraphql.posts.edges;
+        const allPages = result.data.wpgraphql.pages.edges;
+        console.log(blogPosts)
 
         const blogPostsPerPage =
             result.data.limitPost.siteMetadata.blogItemsPerPage;
@@ -107,46 +142,85 @@ exports.createPages = ({ graphql, actions }) => {
             });
         });
 
-        result.data.blog.edges.forEach(({ node }) => {
-            let template =
-                node.frontmatter.template === undefined
-                    ? "blog"
-                    : node.frontmatter.template;
+        blogPosts.forEach(({ node }) => {
             createPage({
-                path: node.fields.slug,
-                component: path.resolve("./src/templates/" + template + ".js"),
+                path: node.slug,
+                component: path.resolve("./src/templates/blog.js"),
                 context: {
-                    slug: node.fields.slug
+                    id: node.id,
+                    slug: node.slug,
+                    featuredImage: node.featuredImage,
+                    id2:  {"eq": "SitePage /" + node.slug},
+                    id3: "SitePage /" + node.slug
                 }
             });
         });
 
-        result.data.portfolio.edges.forEach(({ node }) => {
+        blogPosts.forEach(({ node }) => {
+          console.log("NODE: ", (node.categories.edges[0].node.name).toLowerCase())
             let template =
-                node.frontmatter.template === undefined
+                node.categories.edges[0].node.name === undefined
                     ? "portfolio"
-                    : node.frontmatter.template;
+                    : (node.categories.edges[0].node.name).toLowerCase();
             createPage({
-                path: node.fields.slug,
+                path: node.slug,
                 component: path.resolve("./src/templates/" + template + ".js"),
                 context: {
-                    slug: node.fields.slug
+                    id: node.id,
+                    slug: node.slug,
+                    featuredImage: node.featuredImage,
+                    id2:  {"eq": "SitePage /" + node.slug},
+                    id3: "SitePage /" + node.slug
                 }
             });
         });
 
-        result.data.basepages.edges.forEach(({ node }) => {
-            let template =
-                node.frontmatter.template === undefined
-                    ? "basepage"
-                    : node.frontmatter.template;
+        allPages.forEach(({ node }) => {
             createPage({
-                path: node.fields.slug,
-                component: path.resolve("./src/templates/" + template + ".js"),
+                path: node.slug,
+                component: path.resolve("./src/templates/basepage.js"),
                 context: {
-                    slug: node.fields.slug
+                    id: node.id,
+                    slug: node.slug
                 }
             });
         });
     });
+};
+
+exports.onCreateNode = async ({ node, getNode, actions, store, cache, createNodeId, _auth, }) => {
+    const { createNodeField, createNode } = actions;
+    if (node.internal.type === `MarkdownRemark`) {
+        const slug = createFilePath({ node, getNode, basePath: `basepages` });
+        createNodeField({
+            node,
+            name: `slug`,
+            value: slug
+        });
+    }
+    let fileNode
+
+    if (node.internal.type === `SitePage`) {
+     if (node.context != undefined) {
+
+       if (node.context.featuredImage) {
+         try {
+           fileNode = await createRemoteFileNode({
+             url: node.context.featuredImage.sourceUrl,
+             parentNodeId: node.id,
+             store,
+             cache,
+             createNode,
+             createNodeId,
+             auth: _auth,
+           })
+         } catch (e) {
+           // Ignore
+         }
+       }
+      }
+    }
+    if (fileNode) {
+      node.localFile___NODE = fileNode.id
+    }
 };

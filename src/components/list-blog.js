@@ -35,10 +35,47 @@ export default function() {
                     }
                 }
             }
+
+            wpgraphql {
+              posts (where: {categoryName: "Blog"}){
+                edges{
+                  node{
+                    excerpt
+                    slug
+                    date
+                    title
+                    featuredImage {
+                      sourceUrl(size: LARGE)
+                      srcSet(size: MEDIUM_LARGE)
+                    }
+                    elementorData
+                  }
+                }
+              }
+            }
+
+              allFile {
+                edges {
+                  node {
+                    name
+                    parent{
+                      id
+                    }
+                    childImageSharp {
+                      fluid (maxWidth: 500){
+                        srcSet
+                        ...GatsbyImageSharpFluid
+
+                      }
+                    }
+                  }
+                }
+              }
         }
     `);
 
-    if (query.allMarkdownRemark.edges.length > 0) {
+    if (query.wpgraphql.posts.edges.length > 0) {
+      console.log("QUERY", query.allFile)
         return (
             <section id="blog" className="container">
                 <div className="section-title">

@@ -290,7 +290,7 @@ export default () => (
                             description
                             mail
                             phone
-                            address
+                            
                         }
                     }
                 }
