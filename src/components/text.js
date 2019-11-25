@@ -4,4 +4,4 @@ const TextEditor = (settings) => {
   console.log({settings})
   return (<p>Testing</p>)
 }
-export default Image;
+export default TextEditor;
