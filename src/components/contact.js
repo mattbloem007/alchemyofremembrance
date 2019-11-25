@@ -40,48 +40,59 @@ class Contact extends React.Component {
                 message = encodeURI(this.dataMessage.value),
                 body = `name=${name}&email=${email}&message=${message}`;
 
-            fetch("http://localhost/local/test.json", {
-                method: "post",
-                body: body
-            })
-                .then(function(res) {
-                    return res.json();
-                })
-                .then(
-                    result => {
-                        this.setState({
-                            submitDisabled: false
-                        });
-                        this.resMessage.style.opacity = 1;
-                        if (result.response === "error") {
-                            this.resMessage.innerHTML =
-                                "There was an error in sending the message";
-                            this.resMessage.classList.add("color-error");
-                        } else {
-                            this.resMessage.innerHTML =
-                                "Message sent succesfully";
-                            this.resMessage.classList.remove("color-error");
-                        }
-                        this.dataName.value = "";
-                        this.dataEmail.value = "";
-                        this.dataMessage.value = "";
-                        let _this = this;
-                        setTimeout(function() {
-                            _this.resMessage.style.opacity = 0;
-                        }, 5000);
-                    },
-                    error => {
-                        this.resMessage.innerHTML = "Message sent succesfully";
-                        this.resMessage.classList.remove("color-error");
-                        this.setState({
-                            submitDisabled: false
-                        });
-                        let _this = this;
-                        setTimeout(function() {
-                            _this.resMessage.style.opacity = 0;
-                        }, 5000);
-                    }
-                );
+                var template_params = {
+                   "reply_to": email,
+                   "from_name": name,
+                   "to_name": "Matthew Gabriel",
+                   "message_html": message
+                }
+
+                var service_id = "default_service";
+                var template_id = "template_m9OkeQLI";
+                emailjs.send(service_id, template_id, template_params);
+
+            // fetch("http://localhost/local/test.json", {
+            //     method: "post",
+            //     body: body
+            // })
+            //     .then(function(res) {
+            //         return res.json();
+            //     })
+            //     .then(
+            //         result => {
+            //             this.setState({
+            //                 submitDisabled: false
+            //             });
+            //             this.resMessage.style.opacity = 1;
+            //             if (result.response === "error") {
+            //                 this.resMessage.innerHTML =
+            //                     "There was an error in sending the message";
+            //                 this.resMessage.classList.add("color-error");
+            //             } else {
+            //                 this.resMessage.innerHTML =
+            //                     "Message sent succesfully";
+            //                 this.resMessage.classList.remove("color-error");
+            //             }
+            //             this.dataName.value = "";
+            //             this.dataEmail.value = "";
+            //             this.dataMessage.value = "";
+            //             let _this = this;
+            //             setTimeout(function() {
+            //                 _this.resMessage.style.opacity = 0;
+            //             }, 5000);
+            //         },
+            //         error => {
+            //             this.resMessage.innerHTML = "Message sent succesfully";
+            //             this.resMessage.classList.remove("color-error");
+            //             this.setState({
+            //                 submitDisabled: false
+            //             });
+            //             let _this = this;
+            //             setTimeout(function() {
+            //                 _this.resMessage.style.opacity = 0;
+            //             }, 5000);
+            //         }
+            //     );
         }
     }
 
@@ -183,7 +194,7 @@ class Contact extends React.Component {
                                                     ? " disabled"
                                                     : "")
                                             }
-
+                                            onClick={this.handleSubmit}
                                             id="submit"
                                             ref={c => (this.btn = c)}
                                         >
