@@ -22,70 +22,70 @@ class BlogItem extends React.Component {
       if (this.props.file.node.childImageSharp) {
         isImage = true;
       }
-      return (
-        <article
-        className={`post-card ${this.props.data.count % 3 === 0 && `post-card-large`}
-         ${isImage ? `with-image` : `no-image`}`}
-        style={
-          {
-            backgroundImage: `url(${ isImage ?
-              this.props.file.node.childImageSharp.fluid.src : pic
-            })`,
-          }
-        }
-      >
-        <Link to={this.props.data.node.slug} className="post-card-link">
-          <div className="post-card-content">
-            <h2 className="post-card-title">
-              {this.props.data.node.title || this.props.data.node.slug}
-            </h2>
-          </div>
-        </Link>
-      </article>
-      )
-        // return (
-        //     <div className="item col s12 m6">
-        //         <div className="box">
-        //             <div className="image">
-        //                 {isImage? <Img fluid={this.props.file.node.childImageSharp.fluid}/> : null}
-        //                 <Link
-        //                     to={this.props.data.node.slug}
-        //                     title={this.props.data.node.title}
-        //                     aria-label={this.props.data.node.title}
-        //                     className="overlay-link"
-        //                     style={{ opacity: 0 }}
-        //                 >
-        //                     {this.props.data.node.title}
-        //                 </Link>
-        //             </div>
-        //             <div className="content">
-        //                 <h3 className="text-primary">
-        //                     <Link
-        //                         to={this.props.data.node.slug}
-        //                         title={this.props.data.node.title}
-        //                     >
-        //                         {this.props.data.node.title}
-        //                     </Link>
-        //                 </h3>
-        //                 <div
-        //                   className="text-tertiary"
-        //                   dangerouslySetInnerHTML={{ __html: this.props.data.node.excerpt }}
-        //                 />
-        //                 <p
-        //                     className="date text-secondary"
-        //                     ref={c => (this.textSecondary = c)}
-        //                 >
-        //                     <span className="icon">
-        //                         <Calendar />
-        //                     </span>
-        //                     <Date
-        //                         data={this.props.data.node.date}
-        //                     />
-        //                 </p>
-        //             </div>
-        //         </div>
-        //     </div>
-        // );
+      // return (
+      //   <article
+      //   className={`post-card ${this.props.data.count % 3 === 0 && `post-card-large`}
+      //    ${isImage ? `with-image` : `no-image`}`}
+      //   style={
+      //     {
+      //       backgroundImage: `url(${ isImage ?
+      //         this.props.file.node.childImageSharp.fluid.src : pic
+      //       })`,
+      //     }
+      //   }
+      // >
+      //   <Link to={this.props.data.node.slug} className="post-card-link">
+      //     <div className="post-card-content">
+      //       <h2 className="post-card-title">
+      //         {this.props.data.node.title || this.props.data.node.slug}
+      //       </h2>
+      //     </div>
+      //   </Link>
+      // </article>
+      // )
+        return (
+            <div className="item col s12 m6">
+                <div className="box">
+                    <div className="image">
+                        {isImage? <Img fluid={this.props.file.node.childImageSharp.fluid}/> : null}
+                        <Link
+                            to={this.props.data.node.slug}
+                            title={this.props.data.node.title}
+                            aria-label={this.props.data.node.title}
+                            className="overlay-link"
+                            style={{ opacity: 0 }}
+                        >
+                            {this.props.data.node.title}
+                        </Link>
+                    </div>
+                    <div className="content">
+                        <h3 className="text-primary">
+                            <Link
+                                to={this.props.data.node.slug}
+                                title={this.props.data.node.title}
+                            >
+                                {this.props.data.node.title}
+                            </Link>
+                        </h3>
+                        <div
+                          className="text-tertiary"
+                          dangerouslySetInnerHTML={{ __html: this.props.data.node.excerpt }}
+                        />
+                        <p
+                            className="date text-secondary"
+                            ref={c => (this.textSecondary = c)}
+                        >
+                            <span className="icon">
+                                <Calendar />
+                            </span>
+                            <Date
+                                data={this.props.data.node.date}
+                            />
+                        </p>
+                    </div>
+                </div>
+            </div>
+        );
     }
 }
 
