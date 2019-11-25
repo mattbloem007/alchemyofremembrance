@@ -117,7 +117,9 @@ class Contact extends React.Component {
                 >
                     {this.showContactForm && (
                         <div className="col s12 m6">
-                            <form>
+                            <form method="post" netlify-honeypot="bot-field" data-netlify="true">
+                             <input type="hidden" name="bot-field" />
+                             <input type="hidden" name="form-name" value="contact" />
                                 <div className="field">
                                     <label>
                                         <span className="label text-tertiary">
@@ -181,7 +183,7 @@ class Contact extends React.Component {
                                                     ? " disabled"
                                                     : "")
                                             }
-                                            onClick={this.handleSubmit}
+
                                             id="submit"
                                             ref={c => (this.btn = c)}
                                         >
@@ -290,7 +292,7 @@ export default () => (
                             description
                             mail
                             phone
-                            
+
                         }
                     }
                 }

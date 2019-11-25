@@ -7,11 +7,15 @@ import { Row, Col } from "../components/page-components/grid";
 import MD from "gatsby-custom-md";
 import "../style/portfolio-singlepage.less";
 import Image from '../components/image'
+import Heading from '../components/heading'
+import TextEditor from '../components/text'
 
 const components = {
     row: Row,
     col: Col,
-    Image: Image
+    Image: Image,
+    Heading: Heading,
+    "Text-Editor": TextEditor
 };
 
 function ucwords(text) {
