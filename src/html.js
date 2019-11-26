@@ -11,10 +11,6 @@ export default function HTML(props) {
           name="viewport"
           content="width=device-width, initial-scale=1, shrink-to-fit=no"
         />
-        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/emailjs-com@2.4.1/dist/email.min.js"></script>
-        <script type="text/javascript">
-        (function(){emailjs.init("user_wLPGPl2w2ETFdTUDNZQP2");})();
-        </script>
         {props.headComponents}
       </head>
       <body {...props.bodyAttributes}>
@@ -22,6 +18,12 @@ export default function HTML(props) {
         <noscript key="noscript" id="gatsby-noscript">
           This app works best with JavaScript enabled.
         </noscript>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/emailjs-com@2.3.2/dist/email.min.js"></script>
+<script type="text/javascript">
+   (function(){
+      emailjs.init("user_wLPGPl2w2ETFdTUDNZQP2");
+   })();
+</script>
         <div
           key={`body`}
           id="___gatsby"
