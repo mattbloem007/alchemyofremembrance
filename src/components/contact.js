@@ -40,6 +40,7 @@ class Contact extends React.Component {
                 email = encodeURI(this.dataEmail.value),
                 message = encodeURI(this.dataMessage.value),
                 body = `name=${name}&email=${email}&message=${message}`;
+                console.log(body)
 
                 var template_params = {
                    "reply_to": email,
