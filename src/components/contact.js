@@ -1,6 +1,7 @@
 import React from "react";
 import SectionTitle from "./sectiontitle";
 import { StaticQuery, graphql } from "gatsby";
+import emailjs from 'emailjs-com';
 import { PaperPlane, Mapmarker, Mobile, Envelope, Loading } from "./icons";
 import SocialLinks from "./sociallinks";
 import "../style/contact.less";
