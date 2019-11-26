@@ -50,7 +50,8 @@ class Contact extends React.Component {
 
                 var service_id = "default_service";
                 var template_id = "template_m9OkeQLI";
-                emailjs.send(service_id, template_id, template_params);
+                var user_id = "user_wLPGPl2w2ETFdTUDNZQP2";
+                emailjs.send(service_id, template_id, user_id, template_params);
 
             // fetch("http://localhost/local/test.json", {
             //     method: "post",
