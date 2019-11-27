@@ -52,7 +52,7 @@ class Contact extends React.Component {
                 var service_id = "gmail";
                 var template_id = "template_m9OkeQLI";
                 var user_id = "user_wLPGPl2w2ETFdTUDNZQP2";
-                emailjs.send(service_id, template_id, user_id, template_params);
+                emailjs.send(service_id, template_id, template_params, user_id);
 
             // fetch("http://localhost/local/test.json", {
             //     method: "post",
