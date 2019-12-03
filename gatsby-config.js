@@ -116,8 +116,8 @@ module.exports = {
              // This is field under which it's accessible
              fieldName: `wpgraphql`,
              // Url to query from
-          //   url: `http://41.185.8.137/~xic02/alchemyofremembrance/graphql`,
-            url: `http://alchemy-of-remembrance.local/graphql`
+             url: `http://41.185.8.137/~xic02/alchemyofremembrance/graphql`,
+          //  url: `http://alchemy-of-remembrance.local/graphql`
            },
          },
          {
