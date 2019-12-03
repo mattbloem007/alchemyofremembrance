@@ -37,10 +37,7 @@ class MailList extends React.Component {
                   // I recommend setting `result` to React state
                   // but you can do whatever you want
                 }
-
-
         }
-    }
 
     componentDidMount() {
         if (this.showContactForm) {
@@ -163,6 +160,7 @@ class MailList extends React.Component {
             </section>
         );
     }
-}
+  }
+
 
 export default MailList
