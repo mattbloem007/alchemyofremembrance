@@ -52,6 +52,8 @@ exports.createPages = ({ graphql, actions }) => {
                 siteMetadata {
                     blogItemsPerPage
                     portfolioItemsPerPage
+                    logo
+                    titleImage
                 }
             }
 
@@ -190,6 +192,7 @@ exports.createPages = ({ graphql, actions }) => {
 
 exports.onCreateNode = async ({ node, getNode, actions, store, cache, createNodeId, _auth, }) => {
     const { createNodeField, createNode } = actions;
+    let fileNode
     if (node.internal.type === `MarkdownRemark`) {
         const slug = createFilePath({ node, getNode, basePath: `basepages` });
         createNodeField({
@@ -198,7 +201,6 @@ exports.onCreateNode = async ({ node, getNode, actions, store, cache, createNode
             value: slug
         });
     }
-    let fileNode
 
     if (node.internal.type === `SitePage`) {
      if (node.context != undefined) {
