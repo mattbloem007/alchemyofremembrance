@@ -120,11 +120,11 @@ module.exports = {
           //  url: `http://alchemy-of-remembrance.local/graphql`
            },
          },
-         {
-        resolve: 'gatsby-plugin-mailchimp',
-        options: {
-            endpoint: 'https://netlify.us4.list-manage.com/subscribe/post?u=4c3b87feb8eb2294252a1f637&amp;id=ffae57d19a',
-            },
-        }
+        //  {
+        // resolve: 'gatsby-plugin-mailchimp',
+        // options: {
+        //     endpoint: 'https://netlify.us4.list-manage.com/subscribe/post?u=4c3b87feb8eb2294252a1f637&amp;id=ffae57d19a',
+        //     },
+        // }
     ]
 };
