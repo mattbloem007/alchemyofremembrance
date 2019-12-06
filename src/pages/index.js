@@ -6,7 +6,7 @@ import SocialLinks from "../components/sociallinks";
 import PortfolioList from "../components/list-portfolio";
 import BlogList from "../components/list-blog";
 import Contact from "../components/contact";
-import MailList from '../components/mail-list'
+//import MailList from '../components/mail-list'
 import "../style/wall.less";
 
 class IndexPage extends React.Component {
@@ -143,7 +143,6 @@ class IndexPage extends React.Component {
                 </div>
                 <PortfolioList />
                 <BlogList />
-                <MailList />
                 <Contact />
             </Layout>
         );
